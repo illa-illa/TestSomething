@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.administrator.testsomething">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.KeyListActivity"
+            android:label="@string/key"></activity>
+        <activity
+            android:name=".activity.PrintPkgAndClsActivity"
+            android:label="@string/print_pkg_cls"></activity>
+        <activity
+            android:name=".activity.TestBrocastReceiverActivity"
+            android:label="@string/test_broadcast"></activity>
+
+        <receiver android:name=".receiver.KeyBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.android.intent.ptt.longpress" />
+                <action android:name="com.android.intent.ptt.down" />
+                <action android:name="com.android.intent.ptt.up" />
+                <action android:name="com.android.intent.SOS.longpress" />
+                <action android:name="com.android.intent.SOS.down" />
+                <action android:name="com.android.intent.SOS.up" />
+                <action android:name="android.intent.action.GLOBAL_BUTTON" />
+                <action android:name="com.android.intent.illa.longpress" />
+                <action android:name="com.android.intent.illa.down" />
+                <action android:name="com.android.intent.illa.up" />
+                <action android:name="com.android.intent.test111" />
+                <action android:name="com.android.intent.test222" />
+                <action android:name="com.android.intent.test333" />
+                <action android:name="com.android.intent.test444" />
+                <action android:name="com.android.intent.test555" />
+                <action android:name="com.android.intent.test666" />
+                <action android:name="com.android.intent.test555" />
+                <action android:name="com.yl.ptt.keyup" />
+                <action android:name="com.yl.ptt.keydown" />
+                <action android:name="com.android.cusKey.ptt.down" />
+                <action android:name="com.android.cusKey.ptt.up" />
+                <action android:name="com.yl.gz.stopcamera" />
+                <action android:name="com.yl.gz.startcamera" />
+                <action android:name="com.yl.upload.dispatch.state" />
+
+            </intent-filter>
+
+        </receiver>
+    </application>
+
+</manifest>

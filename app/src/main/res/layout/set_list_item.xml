@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    >
+
+    <TextView
+        android:id="@+id/tv_ptt"
+        android:layout_width="85dp"
+        android:layout_height="52dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:textSize="30dp" />
+
+    <EditText
+        android:id="@+id/et_ptt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp" />
+
+    <Button
+        android:id="@+id/bt_ptt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_toRightOf="@id/et_ptt"
+        android:text="@string/set_button" />
+
+</LinearLayout>
