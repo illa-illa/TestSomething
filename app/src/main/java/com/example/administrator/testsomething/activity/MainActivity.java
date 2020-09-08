@@ -50,9 +50,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         //intent.addFlags(0x01000000);
         this.sendBroadcast(intent);
 
-
-
-
     }
 
     @Override
