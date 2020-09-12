@@ -25,6 +25,10 @@ public class KeyListActivity extends Activity {
         for(AudioDeviceInfo audioDeviceInfo : addedDevices){
             IllaLog.D(audioDeviceInfo.getAddress());
         }
+        AudioDeviceInfo[] addedDevicess = audioManager.getDevices(AudioManager.GET_DEVICES_ALL);
+        for(AudioDeviceInfo audioDeviceInfo : addedDevicess){
+            IllaLog.D("GET_DEVICES_ALL" + audioDeviceInfo.getAddress());
+        }
     }
 
     @Override
