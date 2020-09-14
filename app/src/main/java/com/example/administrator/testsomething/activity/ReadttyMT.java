@@ -9,6 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.OnNmeaMessageListener;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -65,11 +66,17 @@ public class ReadttyMT extends Activity implements View.OnClickListener, RadioGr
     private String mDefaultPath = TTYMT0;
     private String mCurrentPath = "";
 
+    private gpsWakeLock mGpsWakeLock;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_gps);
+
+        mGpsWakeLock = new gpsWakeLock();
+        mGpsWakeLock.acquireScreenWakeLock(this);
+        mGpsWakeLock.acquireCpuWakeLock(this);
 
         mGpsTV = (TextView) findViewById(R.id.gps);
         mStartButton =(Button)findViewById(R.id.start);
@@ -149,6 +156,8 @@ public class ReadttyMT extends Activity implements View.OnClickListener, RadioGr
     @Override
     protected void onStop() {
         super.onStop();
+        mGpsWakeLock.releaseScreenWakeLock();
+        mGpsWakeLock.releaseCpuWakeLock();
     }
 
     @Override
@@ -399,5 +408,60 @@ public class ReadttyMT extends Activity implements View.OnClickListener, RadioGr
         }
 
         return result;
+    }
+
+
+    private class gpsWakeLock {
+        private PowerManager.WakeLock mScreenWakeLock = null;
+        private PowerManager.WakeLock mCpuWakeLock = null;
+
+        /**
+         * Acquire CPU wake lock.
+         *
+         * @param context
+         *            Getting lock context
+         */
+        void acquireCpuWakeLock(Context context) {
+            //Log.v(TAG, "Acquiring cpu wake lock");
+            if (mCpuWakeLock != null) {
+                return;
+            }
+
+            PowerManager pm = (PowerManager) context
+                    .getSystemService(Context.POWER_SERVICE);
+
+            mCpuWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK
+                    | PowerManager.ACQUIRE_CAUSES_WAKEUP, "myapp:mywakelocktag");
+            mCpuWakeLock.acquire();
+        }
+        void acquireScreenWakeLock(Context context) {
+            //Log.v(TAG, "Acquiring screen wake lock");
+            if (mScreenWakeLock != null) {
+                return;
+            }
+
+            PowerManager pm = (PowerManager) context
+                    .getSystemService(Context.POWER_SERVICE);
+
+            mScreenWakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK
+                    | PowerManager.ACQUIRE_CAUSES_WAKEUP, "myapp:mywakelocktag");
+            mScreenWakeLock.acquire();
+        }
+        void releaseScreenWakeLock() {
+            //Log.v(TAG, "Releasing wake lock");
+
+            if (mScreenWakeLock != null) {
+                mScreenWakeLock.release();
+                mScreenWakeLock = null;
+            }
+        }
+
+        void releaseCpuWakeLock() {
+            //Log.v(TAG, "Releasing cpu wake lock");
+            if (mCpuWakeLock != null) {
+                mCpuWakeLock.release();
+                mCpuWakeLock = null;
+            }
+        }
     }
 }
