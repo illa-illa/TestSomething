@@ -106,6 +106,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(IllaConstant.NAME, position);
         context.startActivity(intent);
+        //1111
 
     }
 
