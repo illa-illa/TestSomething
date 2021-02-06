@@ -99,6 +99,7 @@ public class SetNvRamActivity extends PreferenceActivity implements Preference.O
                 NvramInterface.setNv(this,NvramInterface.key_ptt,"1");
                 Toast.makeText(this,NvramInterface.getNv(this,NvramInterface.key_ptt)+"",Toast.LENGTH_LONG).show();
                 break;
+                //test
 
         }
     }
