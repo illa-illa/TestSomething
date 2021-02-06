@@ -12,10 +12,30 @@
     <string name="print_pkg_cls">Print package and Class</string>
     <string name="test_gps">Test GPS</string>
 
+    <string name="test_wifi">wifi signal</string>
+    <string name="test_bt">bt signal</string>
+
+    <string name="filter_wifi">Filter Wifi</string>
+    <string name="refresh_time">Refresh Time</string>
+
     <string name="camera_button">Camera</string>
     <string name="headset_button">Head Set</string>
 
     <string name="cunc">已经存储到</string>
     <string name="switch_path">正在读取</string>
     <string name="data">的数据</string>
+
+    <string name="yes">ok</string>
+    <string name="no">cancel</string>
+
+    <string name="set_nvram">set key and nvram</string>
+
+    <string name="ptt">ptt key</string>
+    <string name="sos">sos key</string>
+    <string name="headset">headset key</string>
+
+    <string name="key_summary">click to set broadcast</string>
+
+    <string name="ptt_broadcast">com.android.intent.ptt</string>
+    <string name="sos_broadcast">com.android.intent.SOS</string>
 </resources>

@@ -16,6 +16,7 @@ public class ListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private ArrayList<ItemInfo> mList;
 
+
     public ListAdapter(Context context, ArrayList<ItemInfo> list) {
         this.mInflater = LayoutInflater.from(context);
         this.mList = list;

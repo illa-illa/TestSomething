@@ -35,6 +35,7 @@ public class PermissionManager {
         mLauchPermissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
         mLauchPermissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         mLauchPermissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        mLauchPermissionList.add(Manifest.permission.READ_PHONE_STATE);
     }
 
     /**

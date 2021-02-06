@@ -1,10 +1,17 @@
 package com.example.administrator.testsomething.activity;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.ImageFormat;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.params.StreamConfigurationMap;
 import android.location.GnssStatus;
 import android.location.Location;
 import android.location.LocationListener;
@@ -49,6 +56,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
     private int mFirstVisibleItem;
 
+    private static PermissionManager mPermissionManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +69,45 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         mList.setOnItemClickListener(this);
         mList.setOnScrollListener(this);
 
-        Intent intent = new Intent();
-        intent.setAction("com.test.bro");
-        intent.setPackage("com.example.administrator.testsomething");
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        Camera.getCameraInfo(0, cameraInfo);
+        IllaLog.D("cameraInfo.facing = " + cameraInfo.facing);
+        //illa add
+        BluetoothConnectionReceiver audioNoisyReceiver = new BluetoothConnectionReceiver();
+        IntentFilter audioFilter = new IntentFilter();
+        audioFilter.addAction(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
+        audioFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+        registerReceiver(audioNoisyReceiver, audioFilter);
+        //illa end
+
         //intent.addFlags(0x01000000);
-        this.sendBroadcast(intent);
+        //startActivity(intent);
+
+        //PackageManager.FEATURE_WIFI;
+//        CameraCharacteristics c = mAllStaticInfo.get(id).getCharacteristics();
+//        StreamConfigurationMap config =
+//                c.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+//        Size[] yuvSizes = config.getOutputSizes(ImageFormat.YUV_420_888);
+//        ArrayList<Size> yuvSizesList = new ArrayList<>(Arrays.asList(yuvSizes));
+
+        AudioManager localAudioManager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        boolean isBluetoothA2dpOn = localAudioManager.isBluetoothA2dpOn();
+        IllaLog.D("isBluetoothScoOn = " + localAudioManager.isBluetoothScoOn());
+        IllaLog.D("isBluetoothA2dpOn = " + isBluetoothA2dpOn);
+        Toast.makeText(this,"",Toast.LENGTH_LONG).show();
+
+        mPermissionManager = new PermissionManager(this);
 
 
     }
+    public class BluetoothConnectionReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int state = intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE, -1);
+            android.util.Log.e("illadebug", "state111111111111 == " + state);
 
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -76,7 +115,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         mList.setAdapter(mAdapter);
         mList.setSelection(mFirstVisibleItem);
 
-
+        //IllaLog.D(getIMSI(this));
     }
 
     public void addView() {
@@ -87,12 +126,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         mItemsList.add(new ItemInfo(R.string.test_broadcast, 0, TestBrocastReceiverActivity.class, this));
         mItemsList.add(new ItemInfo(R.string.print_pkg_cls, 0, PrintPkgAndClsActivity.class, this));
         mItemsList.add(new ItemInfo(R.string.test_gps, 0, ReadttyMT.class, this));
+        mItemsList.add(new ItemInfo(R.string.test_wifi, 0, WifiSignalActivity.class, this));
+        mItemsList.add(new ItemInfo(R.string.set_nvram, 0, SetNvRamActivity.class, this));
     }
 
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        IllaLog.D("keyCode ==  " + keyCode);
+        //IllaLog.D("keyCode ==  " + keyCode);
         return super.onKeyDown(keyCode, event);
     }
 
@@ -124,5 +165,36 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         mFirstVisibleItem = firstVisibleItem;
     }
 
+    public static String getIMSI(Context context) {
+        if (mPermissionManager.requestLocationLaunchPermissions()) {
+            try {
+                try {
+                    TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                    //获取IMSI号
+
+                    String imsi = telephonyManager.getSubscriberId();
+                    if (null == imsi) {
+                        imsi = "";
+                    }
+                    return imsi;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return "";
+                }
+
+
+            } catch (SecurityException e) {
+                Toast.makeText(context, "security exception", Toast.LENGTH_LONG)
+                        .show();
+                IllaLog.D("SecurityException: " + e.getMessage());
+                return "";
+            } catch (IllegalArgumentException e) {
+                IllaLog.D("IllegalArgumentException: " + e.getMessage());
+                return "";
+            }
+        }
+        return "";
+
+    }
 
 }

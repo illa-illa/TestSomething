@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/filter_wifi"
+        app:showAsAction ="always"
+        android:title="@string/filter_wifi"
+        android:icon="@drawable/wifi"
+        android:enabled="true"/>
+    <item android:id="@+id/refresh_time"
+        app:showAsAction ="always"
+        android:title="@string/refresh_time"
+        android:icon="@drawable/wifi"
+        android:enabled="true"/>
+</menu>

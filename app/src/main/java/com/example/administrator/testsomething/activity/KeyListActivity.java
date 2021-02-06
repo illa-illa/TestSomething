@@ -5,6 +5,7 @@ import android.content.Context;
 import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import com.example.administrator.testsomething.util.IllaLog;
 
@@ -40,5 +41,11 @@ public class KeyListActivity extends Activity {
 //        audioManager.startBluetoothSco();
 //        audioManager.setBluetoothScoOn(true);
 //        IllaLog.D(" getMode = " + + audioManager.getMode());
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        IllaLog.D("keyCode ==  " + keyCode);
+        return super.onKeyDown(keyCode, event);
     }
 }
